@@ -1,0 +1,155 @@
+<html><head><base href="/">
+<meta charset="UTF-8">
+<title>Filipino Name Generator</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #ff9966, #ff5e62);
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #333;
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        text-align: center;
+        max-width: 600px;
+        width: 90%;
+    }
+
+    h1 {
+        color: #444;
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+    }
+
+    .name-display {
+        font-size: 1.8rem;
+        margin: 1.5rem 0;
+        padding: 1rem;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        min-height: 60px;
+    }
+
+    button {
+        background: #ff5e62;
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: transform 0.2s, background 0.2s;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    button:hover {
+        background: #ff9966;
+        transform: translateY(-2px);
+    }
+
+    .gender-toggle {
+        margin: 1rem 0;
+    }
+
+    .gender-btn {
+        background: #ddd;
+        padding: 0.5rem 1rem;
+        margin: 0 0.5rem;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+
+    .gender-btn.active {
+        background: #ff5e62;
+        color: white;
+    }
+
+    .info {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 2rem;
+        line-height: 1.4;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Filipino Name Generator</h1>
+        <div class="gender-toggle">
+            <span class="gender-btn active" id="female">Female</span>
+            <span class="gender-btn" id="male">Male</span>
+        </div>
+        <div class="name-display" id="nameDisplay">Click generate to create a name</div>
+        <button onclick="generateName()">Generate Name</button>
+        <p class="info">These names are generated based on common Filipino naming patterns, combining Spanish, English, and native Filipino influences.</p>
+    </div>
+
+<script>
+const femaleFirstNames = [
+    "Maria", "Ana", "Rosa", "Josefina", "Isabella", "Luzviminda", "Maricel", 
+    "Rosario", "Carmen", "Ligaya", "Corazon", "Erlinda", "Marilou", "Imelda",
+    "Divina", "Fe", "Gloria", "Teresa", "Lourdes", "Paz"
+];
+
+const maleFirstNames = [
+    "Juan", "Jose", "Francisco", "Antonio", "Ricardo", "Eduardo", "Miguel",
+    "Roberto", "Carlos", "Fernando", "Manuel", "Ramon", "Paolo", "Marco",
+    "Rodrigo", "Felipe", "Luis", "Pedro", "Gabriel", "Danilo"
+];
+
+const middleNames = [
+    "De la Cruz", "Santos", "Reyes", "Cruz", "Garcia", "Gonzales", "Torres",
+    "Rodriguez", "Martinez", "Ramos", "Aquino", "Del Rosario", "Castro", "Marcos"
+];
+
+const lastNames = [
+    "Santos", "Reyes", "Cruz", "Bautista", "Ocampo", "Garcia", "Mendoza",
+    "Torres", "Tomas", "Andrada", "Castillo", "Flores", "Rivera", "Aquino",
+    "Villanueva", "Fernandez", "Domingo", "Castro", "De Guzman", "Rodriguez"
+];
+
+let currentGender = "female";
+
+document.querySelectorAll('.gender-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentGender = this.id;
+    });
+});
+
+function generateName() {
+    const firstName = currentGender === "female" 
+        ? femaleFirstNames[Math.floor(Math.random() * femaleFirstNames.length)]
+        : maleFirstNames[Math.floor(Math.random() * maleFirstNames.length)];
+    
+    const middleName = middleNames[Math.floor(Math.random() * middleNames.length)];
+    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+    
+    const fullName = `${firstName} ${middleName} ${lastName}`;
+    
+    const nameDisplay = document.getElementById('nameDisplay');
+    nameDisplay.style.opacity = 0;
+    
+    setTimeout(() => {
+        nameDisplay.textContent = fullName;
+        nameDisplay.style.opacity = 1;
+    }, 200);
+}
+
+// Add fade in animation to name display
+document.getElementById('nameDisplay').style.transition = 'opacity 0.3s ease-in-out';
+</script>
+</body>
+</html>
